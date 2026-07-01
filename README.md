@@ -1,0 +1,1 @@
+A simple project to learn google-adk and a2a.
