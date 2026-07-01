@@ -27,7 +27,7 @@ from google.adk.artifacts.in_memory_artifact_service import InMemoryArtifactServ
 from google.adk.auth.credential_service.in_memory_credential_service import InMemoryCredentialService
 from google.adk.apps.app import App
 from agent import attractions_agent
-# from agent import flight_agent # Comment it out when running the file in Task 2
+from agent import flight_agent # Comment it out when running the file in Task 2
 # from agent import hotel_agent # Comment it out when running the file in Task 2 and 3
 from google.adk.apps import App
 
@@ -68,35 +68,35 @@ async def run_cli_attractions():
 
 # Comment it out when running the file in Task 2
 # Task 3: Connect CLI with Flight Agent
-# async def run_cli_flights():
-#     artifact_service = InMemoryArtifactService()
-#     session_service = InMemorySessionService()
-#     credential_service = InMemoryCredentialService()
+async def run_cli_flights():
+    artifact_service = InMemoryArtifactService()
+    session_service = InMemorySessionService()
+    credential_service = InMemoryCredentialService()
 
-#     app = App(name="TravelPlanner", root_agent=flight_agent)
-#     user_input = "Show flights from New York to London on 01-01"     
-#     session = await session_service.create_session(app_name="TravelPlanner", user_id="user_1")
+    app = App(name="TravelPlanner", root_agent=flight_agent)
+    user_input = "Show flights from New York to London on 01-01"     
+    session = await session_service.create_session(app_name="TravelPlanner", user_id="user_1")
 
-#     runner = Runner(
-#         app=app,
-#         artifact_service=artifact_service,
-#         session_service=session_service,
-#         credential_service=credential_service,
-#     )
+    runner = Runner(
+        app=app,
+        artifact_service=artifact_service,
+        session_service=session_service,
+        credential_service=credential_service,
+    )
 
-#     print("Welcome to Travel Planner CLI!")
-#     print(f"Query: {user_input}")
+    print("Welcome to Travel Planner CLI!")
+    print(f"Query: {user_input}")
 
-#     content = types.Content(role="user", parts=[types.Part(text=user_input)])
-#     agen = runner.run_async(user_id=session.user_id, session_id=session.id, new_message=content)
+    content = types.Content(role="user", parts=[types.Part(text=user_input)])
+    agen = runner.run_async(user_id=session.user_id, session_id=session.id, new_message=content)
 
-#     async for event in agen:
-#         if event.content and event.content.parts:
-#             text = "".join(part.text for part in event.content.parts if part.text)
-#             if text:
-#                 print(f"[{event.author}]: {text}")
+    async for event in agen:
+        if event.content and event.content.parts:
+            text = "".join(part.text for part in event.content.parts if part.text)
+            if text:
+                print(f"[{event.author}]: {text}")
 
-#     await runner.close()
+    await runner.close()
 
 
 
@@ -137,4 +137,5 @@ async def run_cli_attractions():
 
 
 if __name__ == "__main__":
-    asyncio.run(run_cli_attractions())
+    # asyncio.run(run_cli_attractions())
+    asyncio.run(run_cli_flights())
